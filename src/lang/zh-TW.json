@@ -42,6 +42,7 @@
   "blacklist_unban": "用戶 [{{username}}](tg://user?id={{userid}}) 已經解除黑名單。",
   "blacklist_unban_err_noparams": "`/unban`命令需要一個參數，往往是用戶ID，或者您可以回復稿件`/unban`命令，即可解除對該稿件投稿者的封鎖。",
   "blacklist_ban_err_noparams": "`/ban`命令需要一個參數，往往是用戶ID，或者您可以回復稿件`/ban`命令，即可封掉投稿者，被封鎖的人無法繼續投稿。",
+  "blacklist_invalid_user_id": "用戶ID格式無效，請輸入一個正整數。",
   "blacklist_unban_only_id": "ID為`{{id}}`的用戶已經解除黑名單。",
   "blacklist_ban_tips": "很抱歉，本機器人無法繼續為您提供服務，因為您已遭到封鎖，建議聯繫頻道管理員解決。",
   "sub_not_exists": "很抱歉，查找不到對應的稿件，操作無法完成",

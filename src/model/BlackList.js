@@ -1,6 +1,20 @@
 import { lang, vars, helper, subs } from '../core';
 import Db from './Db';
 
+function normalizeUserId (userId) {
+  const rawUserId = String(userId).trim();
+  if (!/^\d+$/.test(rawUserId)) {
+    throw {message: lang.get('blacklist_invalid_user_id')}
+  }
+
+  const numericUserId = Number(rawUserId);
+  if (!Number.isSafeInteger(numericUserId) || numericUserId <= 0) {
+    throw {message: lang.get('blacklist_invalid_user_id')}
+  }
+
+  return {rawUserId, numericUserId};
+}
+
 class BlackList extends Db
 {
   /**
@@ -9,10 +23,20 @@ class BlackList extends Db
    * @return {String}        成功返回文案，失败抛出异常
    */
   unbanWithUserId (userId) {
-    let condition = {id: userId};
-    if (this.has(condition)) {
-      this.del(condition);
-      return lang.get('blacklist_unban_only_id', condition);
+    const {rawUserId, numericUserId} = normalizeUserId(userId);
+    const conditions = [{id: numericUserId}, {id: rawUserId}];
+    let found = false;
+
+    // 同时兼容回复稿件产生的数字 ID，以及旧版 /ban <ID> 保存的字符串 ID。
+    conditions.forEach(condition => {
+      if (this.has(condition)) {
+        this.del(condition);
+        found = true;
+      }
+    });
+
+    if (found) {
+      return lang.get('blacklist_unban_only_id', {id: numericUserId});
     }
     throw {message: lang.get('blacklist_unban_notexists')}
   };
@@ -39,12 +63,15 @@ class BlackList extends Db
    * @return {[type]}        [description]
    */
   banWithUserId (userId) {
-    let condition = {id: userId};
-    if (this.has(condition)) {
+    const {rawUserId, numericUserId} = normalizeUserId(userId);
+    const condition = {id: numericUserId};
+    const legacyCondition = {id: rawUserId};
+
+    if (this.has(condition) || this.has(legacyCondition)) {
       throw {message: lang.get('blacklist_exists_only_id', condition)}
     }
     this.add(condition);
-    return lang.get('blacklist_success_only_id');
+    return lang.get('blacklist_success_only_id', condition);
   };
   /**
    * 透过用户指令来封锁用户

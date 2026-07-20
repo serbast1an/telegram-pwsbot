@@ -42,6 +42,7 @@
   "blacklist_unban": "用户 [{{username}}](tg://user?id={{userid}}) 已经解除黑名单。",
   "blacklist_unban_err_noparams": "`/unban`命令需要一个参数，往往是用户ID，或者您可以回复稿件`/unban`命令，即可解除对该稿件投稿者的封锁。",
   "blacklist_ban_err_noparams": "`/ban`命令需要一个参数，往往是用户ID，或者您可以回复稿件`/ban`命令，即可封掉投稿者，被封锁的人无法继续投稿。",
+  "blacklist_invalid_user_id": "用户ID格式无效，请输入一个正整数。",
   "blacklist_unban_only_id": "ID为`{{id}}`的用户已经解除黑名单。",
   "blacklist_ban_tips": "很抱歉，本机器人无法继续为您提供服务，因为您已遭到封锁，建议联系频道管理员解决。",
   "sub_not_exists": "很抱歉，查找不到对应的稿件，操作无法完成",
